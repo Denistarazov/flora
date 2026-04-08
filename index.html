@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Флория — авторские букеты и цветочные композиции с доставкой. Живые цветы, подарочные корзины, оформление свадеб и мероприятий." />
+  <title>Флория — Цветочный магазин</title>
+
+  <style>
+    /* =========================================================
+       CUSTOM PROPERTIES
+    ========================================================= */
+    :root {
+      --color-bg:           #fdf8f5;
+      --color-surface:      #ffffff;
+      --color-surface-alt:  #fef9f6;
+      --color-border:       #ecddd4;
+      --color-text:         #2c1a14;
+      --color-text-muted:   #7c6058;
+      --color-accent:       #b5405e;
+      --color-accent-dark:  #922f4c;
+      --color-accent-light: #fce8ee;
+      --color-green:        #4a7c6f;
+      --color-green-light:  #edf5f3;
+
+      --space-xs:   0.25rem;
+      --space-sm:   0.5rem;
+      --space-md:   1rem;
+      --space-lg:   1.5rem;
+      --space-xl:   2.5rem;
+      --space-2xl:  4rem;
+      --space-3xl:  6rem;
+
+      --radius-sm:  0.375rem;
+      --radius-md:  0.875rem;
+      --radius-lg:  1.5rem;
+      --radius-xl:  2rem;
+
+      --shadow-sm:  0 1px 3px rgba(44,26,20,.07), 0 1px 2px rgba(44,26,20,.05);
+      --shadow-md:  0 4px 18px rgba(44,26,20,.10);
+      --shadow-lg:  0 12px 36px rgba(44,26,20,.13);
+
+      --font-serif: Georgia, 'Times New Roman', serif;
+      --font-sans:  'Segoe UI', system-ui, -apple-system, sans-serif;
+
+      --transition: 220ms ease;
+      --nav-height: 68px;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-height);
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+    ul  { list-style: none; }
+
+    :focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* =========================================================
+       LAYOUT
+    ========================================================= */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin-inline: auto;
+      padding-inline: var(--space-lg);
+    }
+
+    .section { padding-block: var(--space-3xl); }
+
+    .section__header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .section__label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .section__title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -.01em;
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+
+    .section__subtitle {
+      margin-top: var(--space-md);
+      color: var(--color-text-muted);
+      font-size: 1.05rem;
+      max-width: 50ch;
+      margin-inline: auto;
+      line-height: 1.7;
+    }
+
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-accent), #e8789a);
+      border-radius: 2px;
+      margin: var(--space-md) auto 0;
+    }
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.75rem 1.6rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: background-color var(--transition),
+                  color var(--transition),
+                  border-color var(--transition),
+                  box-shadow var(--transition),
+                  transform var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn--primary {
+      background-color: var(--color-accent);
+      color: #fff;
+    }
+    .btn--primary:hover {
+      background-color: var(--color-accent-dark);
+      box-shadow: 0 4px 16px rgba(181,64,94,.35);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline {
+      background-color: transparent;
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+    .btn--outline:hover {
+      background-color: var(--color-accent-light);
+      transform: translateY(-2px);
+    }
+
+    .btn--green {
+      background-color: var(--color-green);
+      color: #fff;
+    }
+    .btn--green:hover {
+      background-color: #3a6358;
+      box-shadow: 0 4px 16px rgba(74,124,111,.35);
+      transform: translateY(-2px);
+    }
+
+    .btn--sm {
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8125rem;
+    }
+
+    /* =========================================================
+       HEADER / NAV
+    ========================================================= */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background-color: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      transition: box-shadow var(--transition);
+    }
+
+    .header--scrolled { box-shadow: var(--shadow-md); }
+
+    .nav {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-lg);
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-shrink: 0;
+    }
+
+    .nav__logo-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .nav__logo-text {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--color-text);
+      letter-spacing: -.01em;
+    }
+
+    .nav__logo-text span { color: var(--color-accent); }
+
+    .nav__list {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .nav__link {
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition), background-color var(--transition);
+    }
+
+    .nav__link:hover,
+    .nav__link.is-active {
+      color: var(--color-accent);
+      background-color: var(--color-accent-light);
+    }
+
+    .nav__cta { margin-left: var(--space-sm); }
+
+    .nav__toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      transition: background-color var(--transition);
+    }
+
+    .nav__toggle:hover { background-color: var(--color-accent-light); }
+
+    .nav__toggle-bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--color-text);
+      border-radius: 2px;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(2) { opacity: 0; }
+    .nav__toggle[aria-expanded="true"] .nav__toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav__mobile {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0; right: 0;
+      background-color: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-md) var(--space-lg) var(--space-lg);
+      z-index: 99;
+      animation: slideDown 200ms ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav__mobile.is-open { display: block; }
+
+    .nav__mobile-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+    }
+
+    .nav__mobile-link {
+      display: block;
+      padding: 0.65rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+      transition: color var(--transition), background-color var(--transition);
+    }
+
+    .nav__mobile-link:hover,
+    .nav__mobile-link.is-active {
+      color: var(--color-accent);
+      background-color: var(--color-accent-light);
+    }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+    .hero {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background-color: var(--color-bg);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 60% at 90% 10%, rgba(232,120,154,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 50% at 5%  90%, rgba(74,124,111,.10) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 50% 50%, rgba(181,64,94,.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Decorative petals */
+    .hero::after {
+      content: '❀';
+      position: absolute;
+      bottom: 8%;
+      right: 5%;
+      font-size: 6rem;
+      opacity: .06;
+      transform: rotate(-20deg);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero__inner {
+      padding-block: var(--space-3xl);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      position: relative;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.35rem 0.9rem;
+      background-color: var(--color-accent-light);
+      border: 1px solid rgba(181,64,94,.2);
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    .hero__badge-dot {
+      width: 8px; height: 8px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .6; transform: scale(.8); }
+    }
+
+    .hero__title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.08;
+      color: var(--color-text);
+      margin-bottom: var(--space-lg);
+    }
+
+    .hero__title-accent { color: var(--color-accent); }
+
+    .hero__tagline {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--color-text-muted);
+      max-width: 48ch;
+      margin-bottom: var(--space-xl);
+      line-height: 1.7;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+
+    /* Floral illustration */
+    .hero__visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero__bouquet-wrap {
+      position: relative;
+      width: 320px;
+      height: 320px;
+    }
+
+    .hero__bouquet-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #fce8ee 0%, #fdf0f5 50%, #f5e8f0 100%);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero__bouquet-emoji {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7rem;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .hero__bouquet-decor {
+      position: absolute;
+      font-size: 2rem;
+      user-select: none;
+      opacity: .75;
+    }
+
+    .hero__bouquet-decor--1 { top:  8%; left: 10%; transform: rotate(-25deg); }
+    .hero__bouquet-decor--2 { top:  8%; right: 8%; transform: rotate(20deg);  }
+    .hero__bouquet-decor--3 { bottom: 10%; left: 8%;  transform: rotate(15deg);  }
+    .hero__bouquet-decor--4 { bottom:  8%; right: 12%; transform: rotate(-15deg); }
+
+    .hero__features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .hero__feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-text-muted);
+    }
+
+    .hero__feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--color-green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* =========================================================
+       ABOUT
+    ========================================================= */
+    .about { background-color: var(--color-surface); }
+
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+
+    .about__visual {
+      display: flex;
+      justify-content: center;
+    }
+
+    .about__image-frame {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .about__image-card {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #fce8ee 0%, #f0e8f5 40%, #e8f0f5 100%);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about__image-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 30%, rgba(255,255,255,.5) 0%, transparent 70%);
+    }
+
+    .about__badge-float {
+      position: absolute;
+      bottom: -16px;
+      right: -12px;
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .about__badge-float-value {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+
+    .about__badge-float-label {
+      font-size: 0.7rem;
+      color: var(--color-text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .about__content {}
+
+    .about__text p {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .about__text p:last-child { margin-bottom: 0; }
+
+    .about__values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+    }
+
+    .value-card {
+      padding: var(--space-md);
+      background-color: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .value-card:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+    }
+
+    .value-card__icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+      line-height: 1;
+    }
+
+    .value-card__title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .value-card__desc {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       CATALOG
+    ========================================================= */
+    .catalog { background-color: var(--color-bg); }
+
+    .catalog__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .product-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    .product-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 500ms ease, transform 500ms ease,
+                  box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(181,64,94,.2);
+    }
+
+    .product-card__image {
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card__image--rose   { background: linear-gradient(135deg, #fce8ee, #ffd6e0); }
+    .product-card__image--mix    { background: linear-gradient(135deg, #fef9e7, #fde68a 50%, #fce8ee); }
+    .product-card__image--green  { background: linear-gradient(135deg, #edf5f3, #bbf7d0); }
+
+    .product-card__badge {
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-md);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .product-card__badge--new  { background-color: var(--color-accent); color: #fff; }
+    .product-card__badge--hit  { background-color: #f59e0b; color: #fff; }
+    .product-card__badge--eco  { background-color: var(--color-green); color: #fff; }
+
+    .product-card__body {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-card__title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-sm);
+    }
+
+    .product-card__desc {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+      flex: 1;
+      margin-bottom: var(--space-md);
+    }
+
+    .product-card__composition {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+
+    .flower-tag {
+      padding: 0.2rem 0.55rem;
+      background-color: var(--color-accent-light);
+      color: var(--color-accent);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .flower-tag--green {
+      background-color: var(--color-green-light);
+      color: var(--color-green);
+    }
+
+    .product-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .product-card__price {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-text);
+      letter-spacing: -.02em;
+    }
+
+    .product-card__price-note {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      font-weight: 400;
+    }
+
+    /* =========================================================
+       SERVICES STRIP
+    ========================================================= */
+    .services {
+      background-color: var(--color-surface);
+      padding-block: var(--space-2xl);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      transition: background-color var(--transition);
+    }
+
+    .service-item:hover { background-color: var(--color-bg); }
+
+    .service-item__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .service-item__icon--green { background-color: var(--color-green-light); }
+
+    .service-item__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .service-item__desc {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+    }
+
+    /* =========================================================
+       CONTACT
+    ========================================================= */
+    .contact { background-color: var(--color-bg); }
+
+    .contact__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .contact__info-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+
+    .contact__info-text {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-xl);
+    }
+
+    .contact__details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+
+    .contact-detail:hover {
+      border-color: var(--color-accent);
+      transform: translateX(4px);
+    }
+
+    .contact-detail__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background-color: var(--color-accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-detail__label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 1px;
+    }
+
+    .contact-detail__value {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .contact-detail__value a {
+      color: var(--color-accent);
+      transition: color var(--transition);
+    }
+
+    .contact-detail__value a:hover { color: var(--color-accent-dark); }
+
+    .contact__socials {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.6rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+      background-color: var(--color-surface);
+      transition: color var(--transition), border-color var(--transition),
+                  background-color var(--transition), transform var(--transition);
+    }
+
+    .social-link:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+      background-color: var(--color-accent-light);
+      transform: translateY(-2px);
+    }
+
+    .social-link__icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    /* CTA card */
+    .contact__cta-card {
+      background: linear-gradient(135deg, #fce8ee 0%, #f5e8f5 60%, #e8f0f5 100%);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-2xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact__cta-card::before {
+      content: '🌸';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 5rem;
+      opacity: .15;
+      transform: rotate(20deg);
+      user-select: none;
+    }
+
+    .contact__cta-card::after {
+      content: '🌿';
+      position: absolute;
+      bottom: -10px;
+      left: -5px;
+      font-size: 4rem;
+      opacity: .15;
+      transform: rotate(-15deg);
+      user-select: none;
+    }
+
+    .contact__cta-emoji {
+      font-size: 3rem;
+      margin-bottom: var(--space-md);
+      line-height: 1;
+    }
+
+    .contact__cta-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--space-sm);
+    }
+
+    .contact__cta-text {
+      color: var(--color-text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    .footer {
+      background-color: var(--color-text);
+      color: rgba(255,255,255,.5);
+      text-align: center;
+      padding-block: var(--space-lg);
+      font-size: 0.875rem;
+    }
+
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .footer__logo {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.8);
+      margin-bottom: var(--space-xs);
+    }
+
+    .footer a {
+      color: rgba(255,255,255,.6);
+      transition: color var(--transition);
+    }
+
+    .footer a:hover { color: #fff; }
+
+    /* =========================================================
+       RESPONSIVE — TABLET
+    ========================================================= */
+    @media (min-width: 640px) {
+      .hero__inner        { grid-template-columns: 1fr 1fr; }
+      .about__grid        { grid-template-columns: 1fr 1fr; }
+      .catalog__grid      { grid-template-columns: repeat(2, 1fr); }
+      .contact__grid      { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* =========================================================
+       RESPONSIVE — DESKTOP
+    ========================================================= */
+    @media (min-width: 900px) {
+      .catalog__grid   { grid-template-columns: repeat(3, 1fr); }
+      .services__grid  { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* =========================================================
+       RESPONSIVE — MOBILE
+    ========================================================= */
+    @media (max-width: 639px) {
+      .nav__list   { display: none; }
+      .nav__cta    { display: none; }
+      .nav__toggle { display: flex; }
+
+      .hero__inner       { text-align: center; }
+      .hero__tagline     { margin-inline: auto; }
+      .hero__actions     { justify-content: center; }
+      .hero__features    { justify-content: center; }
+      .hero__visual      { order: -1; }
+
+      .hero__bouquet-wrap {
+        width: 220px;
+        height: 220px;
+      }
+
+      .hero__bouquet-emoji { font-size: 5rem; }
+
+      .about__values { grid-template-columns: 1fr 1fr; }
+
+      .services__grid { grid-template-columns: 1fr; }
+
+      .contact__cta-card { padding: var(--space-xl) var(--space-lg); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       HEADER
+  ========================================================= -->
+  <header class="header" id="header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#hero" class="nav__logo" aria-label="Флория — на главную">
+          <span class="nav__logo-icon" aria-hidden="true">🌸</span>
+          <span class="nav__logo-text">Фло<span>рия</span></span>
+        </a>
+
+        <ul class="nav__list" role="list">
+          <li><a href="#hero"     class="nav__link" data-section="hero">Главная</a></li>
+          <li><a href="#about"    class="nav__link" data-section="about">О нас</a></li>
+          <li><a href="#catalog"  class="nav__link" data-section="catalog">Каталог</a></li>
+          <li><a href="#services" class="nav__link" data-section="services">Услуги</a></li>
+          <li><a href="#contact"  class="nav__link" data-section="contact">Контакты</a></li>
+        </ul>
+
+        <a href="tel:+74951234567" class="btn btn--primary btn--sm nav__cta" aria-label="Позвонить нам">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.72 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          Заказать звонок
+        </a>
+
+        <button
+          class="nav__toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="nav-mobile"
+          aria-label="Открыть меню"
+        >
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+          <span class="nav__toggle-bar"></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div id="nav-mobile" class="nav__mobile" aria-hidden="true">
+    <ul class="nav__mobile-list" role="list">
+      <li><a href="#hero"     class="nav__mobile-link" data-section="hero">Главная</a></li>
+      <li><a href="#about"    class="nav__mobile-link" data-section="about">О нас</a></li>
+      <li><a href="#catalog"  class="nav__mobile-link" data-section="catalog">Каталог</a></li>
+      <li><a href="#services" class="nav__mobile-link" data-section="services">Услуги</a></li>
+      <li><a href="#contact"  class="nav__mobile-link" data-section="contact">Контакты</a></li>
+    </ul>
+    <a href="tel:+74951234567" class="btn btn--primary" style="width:100%;justify-content:center;" aria-label="Позвонить нам">
+      Заказать звонок
+    </a>
+  </div>
+
+  <!-- =========================================================
+       MAIN
+  ========================================================= -->
+  <main id="main-content">
+
+    <!-- HERO ------------------------------------------------ -->
+    <section class="hero section" id="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero__inner">
+
+          <div class="hero__content">
+            <div class="hero__badge" role="status" aria-label="Статус: доставка сегодня">
+              <span class="hero__badge-dot" aria-hidden="true"></span>
+              Доставка в день заказа
+            </div>
+
+            <h1 class="hero__title" id="hero-title">
+              Живые цветы<br>
+              с <span class="hero__title-accent">душой</span>
+            </h1>
+
+            <p class="hero__tagline">
+              Авторские букеты и цветочные композиции для любого повода.
+              Свежие цветы каждый день, бесплатная доставка по городу
+              при заказе от 2&nbsp;500&nbsp;₽.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#catalog" class="btn btn--primary" aria-label="Перейти к каталогу букетов">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                Выбрать букет
+              </a>
+              <a href="#contact" class="btn btn--outline">
+                Индивидуальный заказ
+              </a>
+            </div>
+
+            <div class="hero__features" aria-label="Преимущества">
+              <div class="hero__feature">
+                <div class="hero__feature-icon" aria-hidden="true">🚚</div>
+                <span>Доставка 2 часа</span>
+              </div>
+              <div class="hero__feature">
+                <div class="hero__feature-icon" aria-hidden="true">🌿</div>
+                <span>Свежие каждый день</span>
+              </div>
+              <div class="hero__feature">
+                <div class="hero__feature-icon" aria-hidden="true">🎁</div>
+                <span>Упаковка в подарок</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__visual" aria-hidden="true">
+            <div class="hero__bouquet-wrap">
+              <div class="hero__bouquet-bg"></div>
+              <div class="hero__bouquet-emoji">💐</div>
+              <span class="hero__bouquet-decor hero__bouquet-decor--1">🌸</span>
+              <span class="hero__bouquet-decor hero__bouquet-decor--2">🌷</span>
+              <span class="hero__bouquet-decor hero__bouquet-decor--3">🌿</span>
+              <span class="hero__bouquet-decor hero__bouquet-decor--4">✿</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT ----------------------------------------------- -->
+    <section class="about section" id="about" aria-labelledby="about-title">
+      <div class="container">
+
+        <div class="section__header">
+          <span class="section__label">Наша история</span>
+          <h2 class="section__title" id="about-title">Любовь к цветам с 2014 года</h2>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+
+        <div class="about__grid">
+          <div class="about__visual">
+            <div class="about__image-frame">
+              <div class="about__image-card" role="img" aria-label="Флористический салон Флория">
+                🌺
+              </div>
+              <div class="about__badge-float" aria-label="10 лет на рынке">
+                <div class="about__badge-float-value">10+</div>
+                <div class="about__badge-float-label">лет работы</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about__content">
+            <div class="about__text">
+              <p>
+                «Флория» — это семейный цветочный магазин в самом сердце города.
+                Мы начинали как небольшая мастерская с одним флористом и горой идей,
+                а сегодня наша команда из 12 специалистов создаёт сотни букетов в месяц —
+                от нежных повседневных до грандиозных свадебных оформлений.
+              </p>
+              <p>
+                Мы сотрудничаем напрямую с голландскими и отечественными питомниками,
+                поэтому каждый цветок в нашем магазине — это гарантия свежести и
+                конкурентная цена без посредников.
+              </p>
+              <p>
+                Каждый букет мы собираем вручную, вкладывая в него историю и настроение,
+                которые вы хотите передать своим близким.
+              </p>
+            </div>
+
+            <div class="about__values" role="list" aria-label="Наши ценности">
+              <div class="value-card" role="listitem">
+                <div class="value-card__icon" aria-hidden="true">🌱</div>
+                <div class="value-card__title">Свежесть</div>
+                <div class="value-card__desc">Поставки 5 раз в неделю напрямую с ферм</div>
+              </div>
+              <div class="value-card" role="listitem">
+                <div class="value-card__icon" aria-hidden="true">✂️</div>
+                <div class="value-card__title">Мастерство</div>
+                <div class="value-card__desc">Флористы с европейским образованием</div>
+              </div>
+              <div class="value-card" role="listitem">
+                <div class="value-card__icon" aria-hidden="true">💚</div>
+                <div class="value-card__title">Экология</div>
+                <div class="value-card__desc">Биоразлагаемая упаковка, без пластика</div>
+              </div>
+              <div class="value-card" role="listitem">
+                <div class="value-card__icon" aria-hidden="true">⭐</div>
+                <div class="value-card__title">Гарантия</div>
+                <div class="value-card__desc">Замена, если букет не понравится</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CATALOG --------------------------------------------- -->
+    <section class="catalog section" id="catalog" aria-labelledby="catalog-title">
+      <div class="container">
+
+        <div class="section__header">
+          <span class="section__label">Каталог</span>
+          <h2 class="section__title" id="catalog-title">Популярные букеты</h2>
+          <p class="section__subtitle">Собираем каждый букет с любовью — под ваш повод и настроение</p>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+
+        <ul class="catalog__grid" role="list" aria-label="Каталог букетов">
+
+          <!-- Card 1 -->
+          <li class="product-card" data-animate>
+            <div class="product-card__image product-card__image--rose" aria-hidden="true">
+              🌹
+              <span class="product-card__badge product-card__badge--hit" aria-label="Хит продаж">ХИТ</span>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__title">«Роскошный закат»</h3>
+              <p class="product-card__desc">
+                25 пионовидных роз сортов Ohara и Juliet в тёплых персиково-коралловых
+                тонах. Дополнен зеленью эвкалипта и хлопком — идеален для признания
+                в любви или юбилея.
+              </p>
+              <ul class="product-card__composition" role="list" aria-label="Состав">
+                <li class="flower-tag">Роза Juliet</li>
+                <li class="flower-tag">Роза Ohara</li>
+                <li class="flower-tag flower-tag--green">Эвкалипт</li>
+                <li class="flower-tag flower-tag--green">Хлопок</li>
+              </ul>
+              <div class="product-card__footer">
+                <div>
+                  <div class="product-card__price">4 900 ₽</div>
+                  <div class="product-card__price-note">25 стеблей</div>
+                </div>
+                <a href="#contact" class="btn btn--primary btn--sm" aria-label="Заказать букет «Роскошный закат»">
+                  Заказать
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Card 2 -->
+          <li class="product-card" data-animate>
+            <div class="product-card__image product-card__image--mix" aria-hidden="true">
+              🌼
+              <span class="product-card__badge product-card__badge--new" aria-label="Новинка">НОВИНКА</span>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__title">«Весенний акварель»</h3>
+              <p class="product-card__desc">
+                Лёгкий смешанный букет из ранункулюсов, анемонов и фрезий пастельных
+                оттенков. Воздушная kompozиция подходит для поздравления, дня рождения
+                или просто доброго утра.
+              </p>
+              <ul class="product-card__composition" role="list" aria-label="Состав">
+                <li class="flower-tag">Ранункулюс</li>
+                <li class="flower-tag">Анемон</li>
+                <li class="flower-tag">Фрезия</li>
+                <li class="flower-tag flower-tag--green">Гипсофила</li>
+              </ul>
+              <div class="product-card__footer">
+                <div>
+                  <div class="product-card__price">3 200 ₽</div>
+                  <div class="product-card__price-note">~30 стеблей</div>
+                </div>
+                <a href="#contact" class="btn btn--primary btn--sm" aria-label="Заказать букет «Весенний акварель»">
+                  Заказать
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <!-- Card 3 -->
+          <li class="product-card" data-animate>
+            <div class="product-card__image product-card__image--green" aria-hidden="true">
+              🌿
+              <span class="product-card__badge product-card__badge--eco" aria-label="Эко-состав">ЭКО</span>
+            </div>
+            <div class="product-card__body">
+              <h3 class="product-card__title">«Лесная сказка»</h3>
+              <p class="product-card__desc">
+                Монобукет из белых пионов и кремовых роз с акцентом из папоротника,
+                мха и веток питтоспорума. Природная эстетика для тех, кто ценит
+                спокойную красоту.
+              </p>
+              <ul class="product-card__composition" role="list" aria-label="Состав">
+                <li class="flower-tag">Пион белый</li>
+                <li class="flower-tag">Роза кремовая</li>
+                <li class="flower-tag flower-tag--green">Папоротник</li>
+                <li class="flower-tag flower-tag--green">Питтоспорум</li>
+              </ul>
+              <div class="product-card__footer">
+                <div>
+                  <div class="product-card__price">3 800 ₽</div>
+                  <div class="product-card__price-note">15 стеблей</div>
+                </div>
+                <a href="#contact" class="btn btn--primary btn--sm" aria-label="Заказать букет «Лесная сказка»">
+                  Заказать
+                </a>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+
+        <div style="text-align:center; margin-top: var(--space-2xl);">
+          <a href="#contact" class="btn btn--outline" aria-label="Запросить полный каталог">
+            Полный каталог по запросу
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SERVICES -------------------------------------------- -->
+    <section class="services" id="services" aria-labelledby="services-title">
+      <div class="container">
+
+        <div class="section__header" style="margin-bottom: var(--space-xl);">
+          <span class="section__label">Что мы делаем</span>
+          <h2 class="section__title" id="services-title">Наши услуги</h2>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+
+        <ul class="services__grid" role="list" aria-label="Список услуг">
+          <li class="service-item" role="listitem">
+            <div class="service-item__icon" aria-hidden="true">💍</div>
+            <div>
+              <div class="service-item__title">Свадебное оформление</div>
+              <div class="service-item__desc">Арки, столы, букет невесты, бутоньерки — от концепции до последнего лепестка</div>
+            </div>
+          </li>
+          <li class="service-item" role="listitem">
+            <div class="service-item__icon service-item__icon--green" aria-hidden="true">🎉</div>
+            <div>
+              <div class="service-item__title">Оформление мероприятий</div>
+              <div class="service-item__desc">Корпоративы, дни рождения, выставки — флористический декор любого масштаба</div>
+            </div>
+          </li>
+          <li class="service-item" role="listitem">
+            <div class="service-item__icon" aria-hidden="true">📦</div>
+            <div>
+              <div class="service-item__title">Подарочные корзины</div>
+              <div class="service-item__desc">Цветы + сладкое, фрукты или шампанское — готовые наборы и сборка на заказ</div>
+            </div>
+          </li>
+          <li class="service-item" role="listitem">
+            <div class="service-item__icon service-item__icon--green" aria-hidden="true">🏢</div>
+            <div>
+              <div class="service-item__title">Абонемент для офиса</div>
+              <div class="service-item__desc">Еженедельная замена цветов в вашем офисе — свежесть и красота без хлопот</div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- CONTACT --------------------------------------------- -->
+    <section class="contact section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+
+        <div class="section__header">
+          <span class="section__label">Связаться с нами</span>
+          <h2 class="section__title" id="contact-title">Давайте создадим что-то красивое</h2>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+
+        <div class="contact__grid">
+
+          <div class="contact__info">
+            <h3 class="contact__info-title">Мы рядом</h3>
+            <p class="contact__info-text">
+              Приходите в наш салон или оставьте заявку онлайн — мы перезвоним
+              в течение 15 минут и поможем выбрать идеальный букет.
+            </p>
+
+            <address class="contact__details" style="font-style:normal;">
+              <div class="contact-detail">
+                <div class="contact-detail__icon" aria-hidden="true">📍</div>
+                <div>
+                  <div class="contact-detail__label">Адрес</div>
+                  <div class="contact-detail__value">ул. Цветочная, 12, Москва</div>
+                </div>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-detail__icon" aria-hidden="true">📞</div>
+                <div>
+                  <div class="contact-detail__label">Телефон</div>
+                  <div class="contact-detail__value">
+                    <a href="tel:+74951234567" aria-label="Позвонить нам: +7 495 123-45-67">+7 (495) 123-45-67</a>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-detail__icon" aria-hidden="true">✉️</div>
+                <div>
+                  <div class="contact-detail__label">Email</div>
+                  <div class="contact-detail__value">
+                    <a href="mailto:hello@floriya.ru" aria-label="Написать нам: hello@floriya.ru">hello@floriya.ru</a>
+                  </div>
+                </div>
+              </div>
+              <div class="contact-detail">
+                <div class="contact-detail__icon" aria-hidden="true">🕐</div>
+                <div>
+                  <div class="contact-detail__label">Режим работы</div>
+                  <div class="contact-detail__value">Ежедневно с 8:00 до 22:00</div>
+                </div>
+              </div>
+            </address>
+
+            <nav class="contact__socials" aria-label="Мы в социальных сетях">
+              <a
+                href="#"
+                class="social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Наш ВКонтакте (открывается в новой вкладке)"
+              >
+                <svg class="social-link__icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.864-.525-2.05-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.253-1.406 2.15-3.574 2.15-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.78 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.491-.085.745-.576.745z"/></svg>
+                ВКонтакте
+              </a>
+              <a
+                href="#"
+                class="social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Наш Telegram (открывается в новой вкладке)"
+              >
+                <svg class="social-link__icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                Telegram
+              </a>
+              <a
+                href="#"
+                class="social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Мы в WhatsApp (открывается в новой вкладке)"
+              >
+                <svg class="social-link__icon" aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                WhatsApp
+              </a>
+            </nav>
+          </div>
+
+          <div class="contact__cta-card">
+            <div class="contact__cta-emoji" aria-hidden="true">💐</div>
+            <h3 class="contact__cta-title">Особый повод?</h3>
+            <p class="contact__cta-text">
+              Свадьба, корпоратив, юбилей? Расскажите нам о вашем событии —
+              мы разработаем уникальную концепцию и подберём цветы,
+              которые сделают его незабываемым.
+            </p>
+            <a href="tel:+74951234567" class="btn btn--primary" style="width:100%;justify-content:center;" aria-label="Позвонить и обсудить особый заказ">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.72 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+              Позвонить нам
+            </a>
+            <a href="mailto:hello@floriya.ru" class="btn btn--outline" style="width:100%;justify-content:center;margin-top:var(--space-sm);" aria-label="Написать нам на email">
+              Написать письмо
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__logo">🌸 Флория</div>
+        <p>&copy; 2024 Флория — Цветочный магазин. Москва, ул. Цветочная, 12</p>
+        <p>
+          <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+          &nbsp;·&nbsp;
+          <a href="mailto:hello@floriya.ru">hello@floriya.ru</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================= -->
+  <script>
+    'use strict';
+
+    /* Sticky header shadow */
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('header--scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    /* Mobile menu */
+    const navToggle   = document.getElementById('nav-toggle');
+    const navMobile   = document.getElementById('nav-mobile');
+    const mobileLinks = navMobile.querySelectorAll('.nav__mobile-link, .btn');
+
+    const closeMenu = () => {
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Открыть меню');
+      navMobile.classList.remove('is-open');
+      navMobile.setAttribute('aria-hidden', 'true');
+    };
+
+    const openMenu = () => {
+      navToggle.setAttribute('aria-expanded', 'true');
+      navToggle.setAttribute('aria-label', 'Закрыть меню');
+      navMobile.classList.add('is-open');
+      navMobile.setAttribute('aria-hidden', 'false');
+    };
+
+    navToggle.addEventListener('click', () => {
+      navToggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+    });
+
+    mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('click', (e) => {
+      if (
+        navMobile.classList.contains('is-open') &&
+        !navMobile.contains(e.target) &&
+        !navToggle.contains(e.target)
+      ) closeMenu();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMobile.classList.contains('is-open')) {
+        closeMenu();
+        navToggle.focus();
+      }
+    });
+
+    /* Active nav on scroll */
+    const sections     = document.querySelectorAll('section[id]');
+    const navLinks     = document.querySelectorAll('.nav__link');
+    const mobileNavLinks = document.querySelectorAll('.nav__mobile-link');
+
+    const setActive = (id) => {
+      [...navLinks, ...mobileNavLinks].forEach(link => {
+        const matches = link.getAttribute('data-section') === id;
+        link.classList.toggle('is-active', matches);
+        link.setAttribute('aria-current', matches ? 'page' : 'false');
+      });
+    };
+
+    new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }),
+      {
+        rootMargin: `-${getComputedStyle(document.documentElement)
+          .getPropertyValue('--nav-height').trim()} 0px -55% 0px`,
+        threshold: 0,
+      }
+    ).observe.bind(
+      new IntersectionObserver(
+        (entries) => entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }),
+        { rootMargin: '-68px 0px -55% 0px', threshold: 0 }
+      )
+    );
+
+    // Proper section observer
+    const sectionObserver = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); }),
+      { rootMargin: '-68px 0px -55% 0px', threshold: 0 }
+    );
+    sections.forEach(s => sectionObserver.observe(s));
+
+    /* Cards fade-in */
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('is-visible'), i * 100);
+            cardObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('[data-animate]').forEach(el => cardObserver.observe(el));
+  </script>
+
+</body>
+</html>
