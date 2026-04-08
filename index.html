@@ -802,6 +802,139 @@
     }
 
     /* =========================================================
+       REVIEWS
+    ========================================================= */
+    .reviews { background-color: var(--color-surface-alt); }
+
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .review-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      transition: box-shadow var(--transition), transform var(--transition);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .review-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 500ms ease, transform 500ms ease, box-shadow var(--transition);
+    }
+
+    .review-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .review-card__stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: var(--space-md);
+      color: #f59e0b;
+      font-size: 1.1rem;
+    }
+
+    .review-card__text {
+      font-size: 0.9375rem;
+      color: var(--color-text-muted);
+      line-height: 1.75;
+      margin-bottom: var(--space-lg);
+    }
+
+    .review-card__author {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .review-card__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .review-card__name {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    .review-card__date {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+    }
+
+    .reviews__rating-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-lg);
+      flex-wrap: wrap;
+      margin-top: var(--space-2xl);
+      padding: var(--space-xl) var(--space-2xl);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+    }
+
+    .reviews__rating-score {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1;
+    }
+
+    .reviews__rating-detail {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .reviews__rating-stars {
+      color: #f59e0b;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+    }
+
+    .reviews__rating-count {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+    }
+
+    .reviews__platforms {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .reviews__platform-tag {
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      background-color: var(--color-bg);
+    }
+
+    /* =========================================================
        CONTACT
     ========================================================= */
     .contact { background-color: var(--color-bg); }
@@ -1010,6 +1143,7 @@
       .hero__inner        { grid-template-columns: 1fr 1fr; }
       .about__grid        { grid-template-columns: 1fr 1fr; }
       .catalog__grid      { grid-template-columns: repeat(2, 1fr); }
+      .reviews__grid      { grid-template-columns: repeat(2, 1fr); }
       .contact__grid      { grid-template-columns: 1fr 1fr; }
     }
 
@@ -1018,6 +1152,7 @@
     ========================================================= */
     @media (min-width: 900px) {
       .catalog__grid   { grid-template-columns: repeat(3, 1fr); }
+      .reviews__grid   { grid-template-columns: repeat(3, 1fr); }
       .services__grid  { grid-template-columns: repeat(4, 1fr); }
     }
 
@@ -1069,6 +1204,7 @@
           <li><a href="#about"    class="nav__link" data-section="about">О нас</a></li>
           <li><a href="#catalog"  class="nav__link" data-section="catalog">Каталог</a></li>
           <li><a href="#services" class="nav__link" data-section="services">Услуги</a></li>
+          <li><a href="#reviews"  class="nav__link" data-section="reviews">Отзывы</a></li>
           <li><a href="#contact"  class="nav__link" data-section="contact">Контакты</a></li>
         </ul>
 
@@ -1098,6 +1234,7 @@
       <li><a href="#about"    class="nav__mobile-link" data-section="about">О нас</a></li>
       <li><a href="#catalog"  class="nav__mobile-link" data-section="catalog">Каталог</a></li>
       <li><a href="#services" class="nav__mobile-link" data-section="services">Услуги</a></li>
+      <li><a href="#reviews"  class="nav__mobile-link" data-section="reviews">Отзывы</a></li>
       <li><a href="#contact"  class="nav__mobile-link" data-section="contact">Контакты</a></li>
     </ul>
     <a href="tel:+74951234567" class="btn btn--primary" style="width:100%;justify-content:center;" aria-label="Позвонить нам">
@@ -1401,6 +1538,93 @@
             </div>
           </li>
         </ul>
+
+      </div>
+    </section>
+
+    <!-- REVIEWS --------------------------------------------- -->
+    <section class="reviews section" id="reviews" aria-labelledby="reviews-title">
+      <div class="container">
+
+        <div class="section__header">
+          <span class="section__label">Отзывы клиентов</span>
+          <h2 class="section__title" id="reviews-title">Нам доверяют тысячи</h2>
+          <p class="section__subtitle">Каждый день мы делаем людей счастливее — и они делятся этим с нами</p>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+
+        <div class="reviews__grid">
+
+          <!-- Review 1 -->
+          <article class="review-card" data-animate aria-label="Отзыв от Анны Королёвой">
+            <div class="review-card__stars" aria-label="Оценка: 5 из 5">★★★★★</div>
+            <p class="review-card__text">
+              «Заказывала букет на свадьбу подруги — результат превзошёл все ожидания!
+              Цветы были свежайшими, упакованы идеально, курьер приехал строго вовремя.
+              Флористы учли все пожелания и предложили свой вариант, который оказался ещё красивее.
+              Теперь Флория — мой цветочный магазин №1.»
+            </p>
+            <div class="review-card__author">
+              <div class="review-card__avatar" aria-hidden="true">А</div>
+              <div>
+                <div class="review-card__name">Анна Королёва</div>
+                <div class="review-card__date">март 2025 · ВКонтакте</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 2 -->
+          <article class="review-card" data-animate aria-label="Отзыв от Дмитрия Ларина">
+            <div class="review-card__stars" aria-label="Оценка: 5 из 5">★★★★★</div>
+            <p class="review-card__text">
+              «Обратился за корпоративным оформлением офиса к 8 Марта. Ребята справились
+              блестяще: 30+ рабочих мест, живые цветы, всё в едином стиле компании.
+              Коллеги были в восторге, а руководство отдельно отметило профессионализм
+              команды. Обязательно вернёмся к следующему празднику!»
+            </p>
+            <div class="review-card__author">
+              <div class="review-card__avatar" aria-hidden="true">Д</div>
+              <div>
+                <div class="review-card__name">Дмитрий Ларин</div>
+                <div class="review-card__date">февраль 2025 · Google</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Review 3 -->
+          <article class="review-card" data-animate aria-label="Отзыв от Марины Степановой">
+            <div class="review-card__stars" aria-label="Оценка: 5 из 5">★★★★★</div>
+            <p class="review-card__text">
+              «Подписка на еженедельную доставку — лучшее, что я сделала для своего дома.
+              Каждую пятницу жду новый сюрприз: флористы никогда не повторяются, подбирают
+              цветы по сезону и настроению. Цены честные, цветы стоят долго.
+              Очень рекомендую!»
+            </p>
+            <div class="review-card__author">
+              <div class="review-card__avatar" aria-hidden="true">М</div>
+              <div>
+                <div class="review-card__name">Марина Степанова</div>
+                <div class="review-card__date">январь 2025 · Яндекс.Карты</div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Rating summary -->
+        <div class="reviews__rating-bar" aria-label="Средний рейтинг">
+          <div class="reviews__rating-score" aria-hidden="true">4.9</div>
+          <div class="reviews__rating-detail">
+            <div class="reviews__rating-stars" aria-label="5 звёзд">★★★★★</div>
+            <div class="reviews__rating-count">на основе 840+ отзывов</div>
+          </div>
+          <div class="reviews__platforms" aria-label="Платформы отзывов">
+            <span class="reviews__platform-tag">ВКонтакте</span>
+            <span class="reviews__platform-tag">Google</span>
+            <span class="reviews__platform-tag">Яндекс.Карты</span>
+            <span class="reviews__platform-tag">2ГИС</span>
+          </div>
+        </div>
 
       </div>
     </section>
